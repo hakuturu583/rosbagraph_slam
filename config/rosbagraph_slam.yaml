@@ -1,0 +1,4 @@
+rosbag_filepath: ~/Downloads/test.bag
+imu_topic: /imu_raw
+nmea_topic: /nmea_sentence
+pointcloud_topic: /points_raw
