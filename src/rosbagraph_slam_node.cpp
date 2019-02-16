@@ -7,6 +7,8 @@
 int main(int argc, char *argv[])
 {
   ros::init(argc, argv, "rosbagraphslam_node");
-  ros::spin();
+  ros::NodeHandle nh;
+  ros::NodeHandle pnh("~");
+  RosbagraphSlam slam(nh,pnh);
   return 0;
 }

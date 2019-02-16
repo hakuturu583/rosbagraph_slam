@@ -1,7 +1,7 @@
 //headers in rosbgraph_slam
 #include <rosbagraph_slam/rosbag_reader.h>
 
-rosbag_reader::rosbag_reader(std::string target_rosbag_path) : target_rosbag_path_(target_rosbag_path)
+RosbagReader::RosbagReader(std::string target_rosbag_path) : target_rosbag_path_(target_rosbag_path)
 {
     if(!rosbag_file_exist_())
     {
@@ -9,12 +9,12 @@ rosbag_reader::rosbag_reader(std::string target_rosbag_path) : target_rosbag_pat
     }
 }
 
-rosbag_reader::~rosbag_reader()
+RosbagReader::~RosbagReader()
 {
 
 }
 
-bool rosbag_reader::rosbag_file_exist_()
+bool RosbagReader::rosbag_file_exist_()
 {
     namespace fs = boost::filesystem;
     fs::path path(target_rosbag_path_);
@@ -28,17 +28,18 @@ bool rosbag_reader::rosbag_file_exist_()
     return true;
 }
 
-bool rosbag_reader::read(std::string nmea_topic, std::string imu_topic, std::string pointcloud_topic)
+std::vector<sensor_msgs::PointCloud2::ConstPtr> RosbagReader::read(std::string pointcloud_topic)
 {
+    std::vector<sensor_msgs::PointCloud2::ConstPtr> ret;
     rosbag::Bag bag;
     bag.open(target_rosbag_path_, rosbag::bagmode::Read);
     std::vector<std::string> topics;
-    topics.push_back(nmea_topic);
-    topics.push_back(imu_topic);
     topics.push_back(pointcloud_topic);
     rosbag::View view(bag, rosbag::TopicQuery(topics));
     foreach(rosbag::MessageInstance const m, view)
     {
-
+        sensor_msgs::PointCloud2::ConstPtr pc =  m.instantiate<sensor_msgs::PointCloud2>();
+        ret.push_back(pc);
     }
+    return ret;
 }

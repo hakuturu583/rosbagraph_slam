@@ -7,8 +7,6 @@
 #include <rosbag/view.h>
 
 //headers for ROS message
-#include <nmea_msgs/Sentence.h>
-#include <sensor_msgs/Imu.h>
 #include <sensor_msgs/PointCloud2.h>
 
 //headers in boost
@@ -16,12 +14,12 @@
 #include <boost/foreach.hpp>
 #define foreach BOOST_FOREACH
 
-class rosbag_reader
+class RosbagReader
 {
 public:
-    rosbag_reader(std::string target_rosbag_path);
-    ~rosbag_reader();
-    bool read(std::string nmea_topic, std::string imu_topic, std::string pointcloud_topic);
+    RosbagReader(std::string target_rosbag_path);
+    ~RosbagReader();
+    std::vector<sensor_msgs::PointCloud2::ConstPtr> read(std::string pointcloud_topic);
 private:
     const std::string target_rosbag_path_;
     bool rosbag_file_exist_();
