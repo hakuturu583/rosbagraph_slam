@@ -38,8 +38,12 @@ void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
   pcl::PointCloud<NormalType>::Ptr normal2;
   norm_est.compute(*normal2);
   //
-  //  Downsample Clouds to Extract keypoints
+  //  Extract Keypoints
   //
+  //pcl::PointCloud<PointType>::Ptr cloud1_keypoints(new pcl::PointCloud<PointType> ());
+  //PointCloudOut cloud1_keypoints(new pcl::PointCloud<PointType> ());
+  pcl::PointCloud<FeatureType>::Ptr cloud1_keypoints(new pcl::PointCloud<FeatureType>());
+  //uniform_sampling.detectKeypoints(cloud1_keypoints);
 }
 
 double FeatureMatching::computeCloudResolution(
