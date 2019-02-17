@@ -20,11 +20,11 @@
  * v1.0 Masaya Kataoka
  */
 
-#include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include <pcl/point_types.h>
 
 typedef pcl::Normal NormalType;
 typedef pcl::PointXYZI PointType;
-//typedef pcl::PointCloud<PointType>::Ptr PointCloudT;
+// typedef pcl::PointCloud<PointType>::Ptr PointCloudT;
 
-#endif  //DEFINE_H_INCLUDED
+#endif // DEFINE_H_INCLUDED

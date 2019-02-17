@@ -19,12 +19,6 @@
 
 #include <rosbagraph_slam/submap.h>
 
-Submap::Submap()
-{
+Submap::Submap() {}
 
-}
-
-Submap::~Submap()
-{
-    
-}
+Submap::~Submap() {}

@@ -21,17 +21,17 @@
 
 #include "define.h"
 
-//headers in PCL
-#include <pcl/search/kdtree.h>
+// headers in PCL
 #include <pcl/features/normal_3d_omp.h>
+#include <pcl/search/kdtree.h>
 
-class FeatureMatching
-{
+class FeatureMatching {
 public:
-    FeatureMatching();
-    ~FeatureMatching();
-    void matching(pcl::PointCloud<PointType>::Ptr cloud1,pcl::PointCloud<PointType>::Ptr cloud2);
-    double computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud);
+  FeatureMatching();
+  ~FeatureMatching();
+  void matching(pcl::PointCloud<PointType>::Ptr cloud1,
+                pcl::PointCloud<PointType>::Ptr cloud2);
+  double computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud);
 };
 
-#endif  //FEATURE_MATCHING_H_INCLUDED
+#endif // FEATURE_MATCHING_H_INCLUDED

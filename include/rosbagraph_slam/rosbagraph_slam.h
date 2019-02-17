@@ -20,26 +20,26 @@
  * v1.0 Masaya Kataoka
  */
 
-//headers in ROS
+// headers in ROS
 #include <ros/ros.h>
 
-//headers in this package
+// headers in this package
 #include "rosbag_reader.h"
 
-//headers in Boost
+// headers in Boost
 #include <boost/shared_ptr.hpp>
 
-class RosbagraphSlam
-{
+class RosbagraphSlam {
 public:
-    RosbagraphSlam(ros::NodeHandle nh,ros::NodeHandle pnh);
-    ~RosbagraphSlam();
+  RosbagraphSlam(ros::NodeHandle nh, ros::NodeHandle pnh);
+  ~RosbagraphSlam();
+
 private:
-    ros::NodeHandle nh_;
-    ros::NodeHandle pnh_;
-    std::string rosbag_filepath_;
-    std::string pointcloud_topic_;
-    boost::shared_ptr<RosbagReader> reader_ptr_;
+  ros::NodeHandle nh_;
+  ros::NodeHandle pnh_;
+  std::string rosbag_filepath_;
+  std::string pointcloud_topic_;
+  boost::shared_ptr<RosbagReader> reader_ptr_;
 };
 
-#endif  //ROSBAGRAPHSLAM_H_INCLUDED
+#endif // ROSBAGRAPHSLAM_H_INCLUDED

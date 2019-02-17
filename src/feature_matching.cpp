@@ -19,61 +19,51 @@
 
 #include <rosbagraph_slam/feature_matching.h>
 
-FeatureMatching::FeatureMatching()
-{
+FeatureMatching::FeatureMatching() {}
 
+FeatureMatching::~FeatureMatching() {}
+
+void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
+                               pcl::PointCloud<PointType>::Ptr cloud2) {
+  float resolution = static_cast<float>(computeCloudResolution(cloud1));
+  //
+  //  Compute Normals
+  //
+  pcl::NormalEstimationOMP<PointType, NormalType> norm_est;
+  norm_est.setKSearch(10);
+  norm_est.setInputCloud(cloud1);
+  pcl::PointCloud<NormalType>::Ptr normal1;
+  norm_est.compute(*normal1);
+  norm_est.setInputCloud(cloud2);
+  pcl::PointCloud<NormalType>::Ptr normal2;
+  norm_est.compute(*normal2);
+  //
+  //  Downsample Clouds to Extract keypoints
+  //
 }
 
-FeatureMatching::~FeatureMatching()
-{
-
-}
-
-void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,pcl::PointCloud<PointType>::Ptr cloud2)
-{
-    float resolution = static_cast<float>(computeCloudResolution (cloud1));
-    //
-    //  Compute Normals
-    //
-    pcl::NormalEstimationOMP<PointType, NormalType> norm_est;
-    norm_est.setKSearch (10);
-    norm_est.setInputCloud (cloud1);
-    pcl::PointCloud<NormalType>::Ptr normal1;
-    norm_est.compute (*normal1);
-    norm_est.setInputCloud (cloud2);
-    pcl::PointCloud<NormalType>::Ptr normal2;
-    norm_est.compute (*normal2);
-    //
-    //  Downsample Clouds to Extract keypoints
-    //
-}
-
-double FeatureMatching::computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud)
-{
-    double res = 0.0;
-    int n_points = 0;
-    int nres;
-    std::vector<int> indices (2);
-    std::vector<float> sqr_distances (2);
-    pcl::search::KdTree<PointType> tree;
-    tree.setInputCloud (cloud);
-    for (size_t i = 0; i < cloud->size (); ++i)
-    {
-        if (! std::isfinite ((*cloud)[i].x))
-        {
-            continue;
-        }
-        //Considering the second neighbor since the first is the point itself.
-        nres = tree.nearestKSearch (i, 2, indices, sqr_distances);
-        if (nres == 2)
-        {
-            res += sqrt (sqr_distances[1]);
-            ++n_points;
-        }
+double FeatureMatching::computeCloudResolution(
+    pcl::PointCloud<PointType>::Ptr &cloud) {
+  double res = 0.0;
+  int n_points = 0;
+  int nres;
+  std::vector<int> indices(2);
+  std::vector<float> sqr_distances(2);
+  pcl::search::KdTree<PointType> tree;
+  tree.setInputCloud(cloud);
+  for (size_t i = 0; i < cloud->size(); ++i) {
+    if (!std::isfinite((*cloud)[i].x)) {
+      continue;
     }
-    if (n_points != 0)
-    {
-        res /= n_points;
+    // Considering the second neighbor since the first is the point itself.
+    nres = tree.nearestKSearch(i, 2, indices, sqr_distances);
+    if (nres == 2) {
+      res += sqrt(sqr_distances[1]);
+      ++n_points;
     }
-    return res;
+  }
+  if (n_points != 0) {
+    res /= n_points;
+  }
+  return res;
 }

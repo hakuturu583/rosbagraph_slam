@@ -22,11 +22,10 @@
 
 #include "feature_matching.h"
 
-class Submap
-{
+class Submap {
 public:
-    Submap();
-    ~Submap();
+  Submap();
+  ~Submap();
 };
 
-#endif  //SUBMAP_H_INCLUDED
+#endif // SUBMAP_H_INCLUDED
