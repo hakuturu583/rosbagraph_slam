@@ -13,6 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
 )
 
+find_package(Ceres REQUIRED)
+
 catkin_package(
   INCLUDE_DIRS include/rosbagraph_slam
   LIBRARIES rosbagraph_slam
@@ -25,5 +27,11 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(rosbagraph_slam_node src/rosbagraph_slam_node.cpp src/rosbagraph_slam.cpp src/rosbag_reader.cpp)
+add_executable(rosbagraph_slam_node 
+  src/submap.cpp
+  src/rosbagraph_slam_node.cpp 
+  src/rosbagraph_slam.cpp 
+  src/icp_registration.cpp
+  src/ndt_registration.cpp
+  src/rosbag_reader.cpp)
 target_link_libraries(rosbagraph_slam_node ${catkin_LIBRARIES})

@@ -1,5 +1,5 @@
-#ifndef ROSBAGRAPHSLAM_H_INCLUDED
-#define ROSBAGRAPHSLAM_H_INCLUDED
+#ifndef DEFINE_H_INCLUDED
+#define DEFINE_H_INCLUDED
 
 /*
  * Copyright 2019 Masaya Kataoka. All rights reserved.
@@ -20,26 +20,10 @@
  * v1.0 Masaya Kataoka
  */
 
-//headers in ROS
-#include <ros/ros.h>
+#include <pcl/point_types.h>
+#include <pcl/point_cloud.h>
 
-//headers in this package
-#include "rosbag_reader.h"
+typedef pcl::PointXYZI PointT;
+typedef pcl::PointCloud<PointT>::Ptr PointCloudT;
 
-//headers in Boost
-#include <boost/shared_ptr.hpp>
-
-class RosbagraphSlam
-{
-public:
-    RosbagraphSlam(ros::NodeHandle nh,ros::NodeHandle pnh);
-    ~RosbagraphSlam();
-private:
-    ros::NodeHandle nh_;
-    ros::NodeHandle pnh_;
-    std::string rosbag_filepath_;
-    std::string pointcloud_topic_;
-    boost::shared_ptr<RosbagReader> reader_ptr_;
-};
-
-#endif  //ROSBAGRAPHSLAM_H_INCLUDED
+#endif  //
