@@ -46,8 +46,6 @@ private:
   ros::Publisher groundless_points_pub_;
   ros::Publisher ground_points_pub_;
 
-  std::string input_point_topic_;
-
   double sensor_height_;               // meters
   double general_max_slope_;           // degrees
   double local_max_slope_;             // degrees
@@ -158,13 +156,9 @@ private:
   RemovePointsUpTo(const pcl::PointCloud<pcl::PointXYZI>::Ptr in_cloud_ptr,
                    double in_min_distance,
                    pcl::PointCloud<pcl::PointXYZI>::Ptr out_filtered_cloud_ptr);
-
-  void CloudCallback(const sensor_msgs::PointCloud2ConstPtr &in_sensor_cloud);
-
-  friend class RayGroundFilter_clipCloud_Test;
-
 public:
   RayGroundFilter();
+  pcl::PointCloud<pcl::PointXYZI>::Ptr filter(const sensor_msgs::PointCloud2ConstPtr &in_sensor_cloud);
 };
 
 #endif // RAY_GROUND_FILTER_H_
