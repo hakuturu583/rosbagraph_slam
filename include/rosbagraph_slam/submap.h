@@ -20,8 +20,7 @@
  * v1.0 Masaya Kataoka
  */
 
-#include "icp_registration.h"
-#include "ndt_registration.h"
+#include "feature_matching.h"
 
 class Submap
 {

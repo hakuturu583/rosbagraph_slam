@@ -31,7 +31,7 @@ add_executable(rosbagraph_slam_node
   src/submap.cpp
   src/rosbagraph_slam_node.cpp 
   src/rosbagraph_slam.cpp 
-  src/icp_registration.cpp
-  src/ndt_registration.cpp
+  src/feature_matching.cpp
+  src/ray_ground_filter.cpp
   src/rosbag_reader.cpp)
 target_link_libraries(rosbagraph_slam_node ${catkin_LIBRARIES})

@@ -1,3 +1,5 @@
+#ifndef FEATURE_MATCHING_H_INCLUDED
+#define FEATURE_MATCHING_H_INCLUDED
 /*
  * Copyright 2019 Masaya Kataoka. All rights reserved.
  *
@@ -17,14 +19,19 @@
  * v1.0 Masaya Kataoka
  */
 
-#include <rosbagraph_slam/ndt_registration.h>
+#include "define.h"
 
-NdtRegistration::NdtRegistration()
+//headers in PCL
+#include <pcl/search/kdtree.h>
+#include <pcl/features/normal_3d_omp.h>
+
+class FeatureMatching
 {
+public:
+    FeatureMatching();
+    ~FeatureMatching();
+    void matching(pcl::PointCloud<PointType>::Ptr cloud1,pcl::PointCloud<PointType>::Ptr cloud2);
+    double computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud);
+};
 
-}
-
-NdtRegistration::~NdtRegistration()
-{
-    
-}
+#endif  //FEATURE_MATCHING_H_INCLUDED
