@@ -19,7 +19,9 @@
 
 #include <rosbagraph_slam/feature_matching.h>
 
-FeatureMatching::FeatureMatching() {}
+FeatureMatching::FeatureMatching(double kdtree_radius) {
+  kdtree_radius_ = kdtree_radius;
+}
 
 FeatureMatching::~FeatureMatching() {}
 
@@ -40,10 +42,36 @@ void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
   //
   //  Extract Keypoints
   //
-  //pcl::PointCloud<PointType>::Ptr cloud1_keypoints(new pcl::PointCloud<PointType> ());
-  //PointCloudOut cloud1_keypoints(new pcl::PointCloud<PointType> ());
-  pcl::PointCloud<FeatureType>::Ptr cloud1_keypoints(new pcl::PointCloud<FeatureType>());
-  //uniform_sampling.detectKeypoints(cloud1_keypoints);
+}
+
+pcl::PointCloud<FeatureType>::Ptr
+FeatureMatching::getFeature(pcl::PointCloud<PointType>::Ptr cloud) {
+  pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(
+      new pcl::PointCloud<pcl::Normal>());
+  FeatureEstimation estimation;
+  pcl::PointCloud<FeatureType>::Ptr ret(new pcl::PointCloud<FeatureType>());
+  cloud_normals = surfaceNormals(cloud);
+  estimation.setInputCloud(cloud);
+  estimation.setInputNormals(cloud_normals);
+  pcl::search::KdTree<PointType>::Ptr tree(
+      new pcl::search::KdTree<PointType>());
+  estimation.setSearchMethod(tree);
+  estimation.compute(*ret);
+  return ret;
+}
+
+pcl::PointCloud<pcl::Normal>::Ptr
+FeatureMatching::surfaceNormals(pcl::PointCloud<PointType>::Ptr cloud) {
+  pcl::NormalEstimation<PointType, pcl::Normal> ne;
+  ne.setInputCloud(cloud);
+  pcl::search::KdTree<PointType>::Ptr tree(
+      new pcl::search::KdTree<PointType>());
+  ne.setSearchMethod(tree);
+  pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(
+      new pcl::PointCloud<pcl::Normal>);
+  ne.setRadiusSearch(kdtree_radius_);
+  ne.compute(*cloud_normals);
+  return cloud_normals;
 }
 
 double FeatureMatching::computeCloudResolution(

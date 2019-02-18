@@ -332,14 +332,13 @@ pcl::PointCloud<pcl::PointXYZI>::Ptr RayGroundFilter::filter(
   return ground_cloud_ptr;
 }
 
-RayGroundFilter::RayGroundFilter() : node_handle_("~")
-{
-  //Model   |   Horizontal   |   Vertical   | FOV(Vertical)    degrees / rads
+RayGroundFilter::RayGroundFilter() : node_handle_("~") {
+  // Model   |   Horizontal   |   Vertical   | FOV(Vertical)    degrees / rads
   //----------------------------------------------------------
-  //HDL-64  |0.08-0.35(0.32) |     0.4      |  -24.9 <=x<=2.0   (26.9  / 0.47)
-  //HDL-32  |     0.1-0.4    |     1.33     |  -30.67<=x<=10.67 (41.33 / 0.72)
-  //VLP-16  |     0.1-0.4    |     2.0      |  -15.0<=x<=15.0   (30    / 0.52)
-  //VLP-16HD|     0.1-0.4    |     1.33     |  -10.0<=x<=10.0   (20    / 0.35)
+  // HDL-64  |0.08-0.35(0.32) |     0.4      |  -24.9 <=x<=2.0   (26.9  / 0.47)
+  // HDL-32  |     0.1-0.4    |     1.33     |  -30.67<=x<=10.67 (41.33 / 0.72)
+  // VLP-16  |     0.1-0.4    |     2.0      |  -15.0<=x<=15.0   (30    / 0.52)
+  // VLP-16HD|     0.1-0.4    |     1.33     |  -10.0<=x<=10.0   (20    / 0.35)
   ROS_INFO("Initializing Ground Filter, please wait...");
   node_handle_.param("sensor_height", sensor_height_, 1.7);
   ROS_INFO("sensor_height[meters]: %f", sensor_height_);
@@ -347,18 +346,26 @@ RayGroundFilter::RayGroundFilter() : node_handle_("~")
   ROS_INFO("general_max_slope[deg]: %f", general_max_slope_);
   node_handle_.param("local_max_slope", local_max_slope_, 5.0);
   ROS_INFO("local_max_slope[deg]: %f", local_max_slope_);
-  node_handle_.param("radial_divider_angle", radial_divider_angle_, 0.1); //1 degree default
+  node_handle_.param("radial_divider_angle", radial_divider_angle_,
+                     0.1); // 1 degree default
   ROS_INFO("radial_divider_angle[deg]: %f", radial_divider_angle_);
-  node_handle_.param("concentric_divider_distance",concentric_divider_distance_, 0.01);//0.1 meters default
-  ROS_INFO("concentric_divider_distance[meters]: %f",concentric_divider_distance_);
+  node_handle_.param("concentric_divider_distance",
+                     concentric_divider_distance_, 0.01); // 0.1 meters default
+  ROS_INFO("concentric_divider_distance[meters]: %f",
+           concentric_divider_distance_);
   ROS_INFO("min_height_threshold[meters]: %f", min_height_threshold_);
-  node_handle_.param("clipping_height", clipping_height_, 0.2);//0.2 meters default above the car
+  node_handle_.param("clipping_height", clipping_height_,
+                     0.2); // 0.2 meters default above the car
   ROS_INFO("clipping_height[meters]: %f", clipping_height_);
-  node_handle_.param("min_height_threshold", min_height_threshold_, 0.05);//0.05 meters default
-  node_handle_.param("min_point_distance", min_point_distance_, 1.85);//1.85 meters default
+  node_handle_.param("min_height_threshold", min_height_threshold_,
+                     0.05); // 0.05 meters default
+  node_handle_.param("min_point_distance", min_point_distance_,
+                     1.85); // 1.85 meters default
   ROS_INFO("min_point_distance[meters]: %f", min_point_distance_);
-  node_handle_.param("reclass_distance_threshold", reclass_distance_threshold_,0.2);//0.5 meters default
-  ROS_INFO("reclass_distance_threshold[meters]: %f",reclass_distance_threshold_);
+  node_handle_.param("reclass_distance_threshold", reclass_distance_threshold_,
+                     0.2); // 0.5 meters default
+  ROS_INFO("reclass_distance_threshold[meters]: %f",
+           reclass_distance_threshold_);
   radial_dividers_num_ = ceil(360 / radial_divider_angle_);
   ROS_INFO("Radial Divisions: %d", (int)radial_dividers_num_);
   ROS_INFO("ray_ground_filter is ready.");

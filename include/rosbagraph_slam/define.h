@@ -20,12 +20,14 @@
  * v1.0 Masaya Kataoka
  */
 
+#include <pcl/features/vfh.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
-#include <pcl/keypoints/sift_keypoint.h>
 
 typedef pcl::Normal NormalType;
 typedef pcl::PointXYZI PointType;
-typedef pcl::SIFTKeypoint<pcl::PointNormal, pcl::PointWithScale> FeatureType;
+typedef pcl::VFHSignature308 FeatureType;
+typedef pcl::VFHEstimation<PointType, pcl::Normal, FeatureType>
+    FeatureEstimation;
 
 #endif // DEFINE_H_INCLUDED

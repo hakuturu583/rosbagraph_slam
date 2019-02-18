@@ -73,8 +73,8 @@ private:
     float radius; // cylindric coords on XY Plane
     float theta;  // angle deg on XY plane
 
-    size_t radial_div; // index of the radial divsion to which this point
-                       // belongs to
+    size_t radial_div;     // index of the radial divsion to which this point
+                           // belongs to
     size_t concentric_div; // index of the concentric division to which this
                            // points belongs to
 
@@ -156,9 +156,11 @@ private:
   RemovePointsUpTo(const pcl::PointCloud<pcl::PointXYZI>::Ptr in_cloud_ptr,
                    double in_min_distance,
                    pcl::PointCloud<pcl::PointXYZI>::Ptr out_filtered_cloud_ptr);
+
 public:
   RayGroundFilter();
-  pcl::PointCloud<pcl::PointXYZI>::Ptr filter(const sensor_msgs::PointCloud2ConstPtr &in_sensor_cloud);
+  pcl::PointCloud<pcl::PointXYZI>::Ptr
+  filter(const sensor_msgs::PointCloud2ConstPtr &in_sensor_cloud);
 };
 
 #endif // RAY_GROUND_FILTER_H_

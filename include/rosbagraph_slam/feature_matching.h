@@ -27,11 +27,18 @@
 
 class FeatureMatching {
 public:
-  FeatureMatching();
+  FeatureMatching(double kdtree_radius);
   ~FeatureMatching();
   void matching(pcl::PointCloud<PointType>::Ptr cloud1,
                 pcl::PointCloud<PointType>::Ptr cloud2);
+
+private:
   double computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud);
+  pcl::PointCloud<FeatureType>::Ptr
+  getFeature(pcl::PointCloud<PointType>::Ptr cloud);
+  pcl::PointCloud<pcl::Normal>::Ptr
+  surfaceNormals(pcl::PointCloud<PointType>::Ptr cloud);
+  double kdtree_radius_;
 };
 
 #endif // FEATURE_MATCHING_H_INCLUDED
