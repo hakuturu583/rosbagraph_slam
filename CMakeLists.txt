@@ -33,5 +33,7 @@ add_executable(rosbagraph_slam_node
   src/rosbagraph_slam.cpp 
   src/feature_matching.cpp
   src/ray_ground_filter.cpp
+  src/solver.cpp
+  src/cost_function.cpp
   src/rosbag_reader.cpp)
 target_link_libraries(rosbagraph_slam_node ${catkin_LIBRARIES})

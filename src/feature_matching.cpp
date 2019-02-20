@@ -37,10 +37,8 @@ void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
   //
   //  Extract Keypoints
   //
-  /*
-  pcl::PointCloud<FeatureType>::Ptr keypoints1 = getKeypoints(cloud1);
-  pcl::PointCloud<FeatureType>::Ptr keypoints2 = getKeypoints(cloud2);
-  */
+  pcl::PointCloud<PointType>::Ptr keypoints1 = getKeypoints(cloud1);
+  pcl::PointCloud<PointType>::Ptr keypoints2 = getKeypoints(cloud2);
 }
 
 pcl::PointCloud<PointType>::Ptr
