@@ -34,30 +34,24 @@ void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
   pcl::NormalEstimationOMP<PointType, NormalType> norm_est;
   norm_est.setKSearch(10);
   norm_est.setInputCloud(cloud1);
-  pcl::PointCloud<NormalType>::Ptr normal1;
-  norm_est.compute(*normal1);
-  norm_est.setInputCloud(cloud2);
-  pcl::PointCloud<NormalType>::Ptr normal2;
-  norm_est.compute(*normal2);
   //
   //  Extract Keypoints
   //
+  /*
+  pcl::PointCloud<FeatureType>::Ptr keypoints1 = getKeypoints(cloud1);
+  pcl::PointCloud<FeatureType>::Ptr keypoints2 = getKeypoints(cloud2);
+  */
 }
 
-pcl::PointCloud<FeatureType>::Ptr
-FeatureMatching::getFeature(pcl::PointCloud<PointType>::Ptr cloud) {
-  pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(
-      new pcl::PointCloud<pcl::Normal>());
-  FeatureEstimation estimation;
-  pcl::PointCloud<FeatureType>::Ptr ret(new pcl::PointCloud<FeatureType>());
-  cloud_normals = surfaceNormals(cloud);
-  estimation.setInputCloud(cloud);
-  estimation.setInputNormals(cloud_normals);
-  pcl::search::KdTree<PointType>::Ptr tree(
-      new pcl::search::KdTree<PointType>());
-  estimation.setSearchMethod(tree);
-  estimation.compute(*ret);
-  return ret;
+pcl::PointCloud<PointType>::Ptr
+FeatureMatching::getKeypoints(pcl::PointCloud<PointType>::Ptr cloud) {
+  pcl::PointCloud<PointType>::Ptr keypoints(new pcl::PointCloud<PointType>());
+  pcl::HarrisKeypoint3D<PointType,PointType> detector;
+  detector.setNonMaxSupression(true);
+  detector.setRadius(computeCloudResolution(cloud));
+  detector.setInputCloud(cloud);
+  detector.compute(*keypoints);
+  return keypoints;
 }
 
 pcl::PointCloud<pcl::Normal>::Ptr

@@ -24,6 +24,7 @@
 // headers in PCL
 #include <pcl/features/normal_3d_omp.h>
 #include <pcl/search/kdtree.h>
+#include <pcl/keypoints/harris_3d.h>
 
 class FeatureMatching {
 public:
@@ -34,8 +35,8 @@ public:
 
 private:
   double computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud);
-  pcl::PointCloud<FeatureType>::Ptr
-  getFeature(pcl::PointCloud<PointType>::Ptr cloud);
+  pcl::PointCloud<PointType>::Ptr
+  getKeypoints(pcl::PointCloud<PointType>::Ptr cloud);
   pcl::PointCloud<pcl::Normal>::Ptr
   surfaceNormals(pcl::PointCloud<PointType>::Ptr cloud);
   double kdtree_radius_;

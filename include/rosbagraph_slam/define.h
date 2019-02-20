@@ -20,14 +20,13 @@
  * v1.0 Masaya Kataoka
  */
 
-#include <pcl/features/vfh.h>
+#include <pcl/features/shot_omp.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
+#include <pcl/keypoints/uniform_sampling.h>
 
 typedef pcl::Normal NormalType;
 typedef pcl::PointXYZI PointType;
-typedef pcl::VFHSignature308 FeatureType;
-typedef pcl::VFHEstimation<PointType, pcl::Normal, FeatureType>
-    FeatureEstimation;
+typedef pcl::SHOT352 FeatureType;
 
 #endif // DEFINE_H_INCLUDED
