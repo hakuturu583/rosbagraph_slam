@@ -23,8 +23,8 @@
 
 // headers in PCL
 #include <pcl/features/normal_3d_omp.h>
-#include <pcl/search/kdtree.h>
 #include <pcl/keypoints/harris_3d.h>
+#include <pcl/search/kdtree.h>
 
 class FeatureMatching {
 public:

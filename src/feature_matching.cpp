@@ -44,7 +44,7 @@ void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
 pcl::PointCloud<PointType>::Ptr
 FeatureMatching::getKeypoints(pcl::PointCloud<PointType>::Ptr cloud) {
   pcl::PointCloud<PointType>::Ptr keypoints(new pcl::PointCloud<PointType>());
-  pcl::HarrisKeypoint3D<PointType,PointType> detector;
+  pcl::HarrisKeypoint3D<PointType, PointType> detector;
   detector.setNonMaxSupression(true);
   detector.setRadius(computeCloudResolution(cloud));
   detector.setInputCloud(cloud);

@@ -39,4 +39,4 @@ struct CostFunctor{
 };
 */
 
-#endif  //COST_FUNCTION_H_INCLUDED
+#endif // COST_FUNCTION_H_INCLUDED

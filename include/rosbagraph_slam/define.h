@@ -21,9 +21,9 @@
  */
 
 #include <pcl/features/shot_omp.h>
+#include <pcl/keypoints/uniform_sampling.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
-#include <pcl/keypoints/uniform_sampling.h>
 
 typedef pcl::Normal NormalType;
 typedef pcl::PointXYZI PointType;

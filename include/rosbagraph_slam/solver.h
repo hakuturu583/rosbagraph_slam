@@ -20,4 +20,4 @@
  * v1.0 Masaya Kataoka
  */
 
-#endif  //SOLVER_H_INCLUDED
+#endif // SOLVER_H_INCLUDED
