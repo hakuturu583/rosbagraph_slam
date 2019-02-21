@@ -34,11 +34,13 @@ public:
                 pcl::PointCloud<PointType>::Ptr cloud2);
 
 private:
+  pcl::PointCloud<FeatureType>::Ptr computeFeature(pcl::PointCloud<PointType>::Ptr cloud,
+    pcl::PointCloud<PointType>::Ptr keypoints,pcl::PointCloud<pcl::Normal>::Ptr surface_normal);
   double computeCloudResolution(pcl::PointCloud<PointType>::Ptr &cloud);
   pcl::PointCloud<PointType>::Ptr
   getKeypoints(pcl::PointCloud<PointType>::Ptr cloud);
   pcl::PointCloud<pcl::Normal>::Ptr
-  surfaceNormals(pcl::PointCloud<PointType>::Ptr cloud);
+  computeNormals(pcl::PointCloud<PointType>::Ptr cloud);
   double kdtree_radius_;
 };
 

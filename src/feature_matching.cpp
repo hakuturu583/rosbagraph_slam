@@ -27,18 +27,34 @@ FeatureMatching::~FeatureMatching() {}
 
 void FeatureMatching::matching(pcl::PointCloud<PointType>::Ptr cloud1,
                                pcl::PointCloud<PointType>::Ptr cloud2) {
-  float resolution = static_cast<float>(computeCloudResolution(cloud1));
   //
   //  Compute Normals
   //
-  pcl::NormalEstimationOMP<PointType, NormalType> norm_est;
-  norm_est.setKSearch(10);
-  norm_est.setInputCloud(cloud1);
+  pcl::PointCloud<pcl::Normal>::Ptr normal1 = computeNormals(cloud1);
+  pcl::PointCloud<pcl::Normal>::Ptr normal2 = computeNormals(cloud2);
   //
   //  Extract Keypoints
   //
   pcl::PointCloud<PointType>::Ptr keypoints1 = getKeypoints(cloud1);
   pcl::PointCloud<PointType>::Ptr keypoints2 = getKeypoints(cloud2);
+  //
+  //  Compute Descriptor for keypoints
+  //
+  pcl::PointCloud<FeatureType>::Ptr feature1 = computeFeature(cloud1,keypoints1,normal1);
+  pcl::PointCloud<FeatureType>::Ptr feature2 = computeFeature(cloud2,keypoints2,normal2);
+}
+
+pcl::PointCloud<FeatureType>::Ptr FeatureMatching::computeFeature(pcl::PointCloud<PointType>::Ptr cloud,
+    pcl::PointCloud<PointType>::Ptr keypoints,pcl::PointCloud<pcl::Normal>::Ptr surface_normal)
+{
+    pcl::PointCloud<FeatureType>::Ptr feature;
+    pcl::SHOTEstimationOMP<PointType, NormalType, FeatureType> descr_est;
+    descr_est.setRadiusSearch(computeCloudResolution(cloud));
+    descr_est.setInputCloud(keypoints);
+    descr_est.setInputNormals(surface_normal);
+    descr_est.setSearchSurface(cloud);
+    descr_est.compute(*feature);
+    return feature;
 }
 
 pcl::PointCloud<PointType>::Ptr
@@ -53,16 +69,12 @@ FeatureMatching::getKeypoints(pcl::PointCloud<PointType>::Ptr cloud) {
 }
 
 pcl::PointCloud<pcl::Normal>::Ptr
-FeatureMatching::surfaceNormals(pcl::PointCloud<PointType>::Ptr cloud) {
-  pcl::NormalEstimation<PointType, pcl::Normal> ne;
-  ne.setInputCloud(cloud);
-  pcl::search::KdTree<PointType>::Ptr tree(
-      new pcl::search::KdTree<PointType>());
-  ne.setSearchMethod(tree);
-  pcl::PointCloud<pcl::Normal>::Ptr cloud_normals(
-      new pcl::PointCloud<pcl::Normal>);
-  ne.setRadiusSearch(kdtree_radius_);
-  ne.compute(*cloud_normals);
+FeatureMatching::computeNormals(pcl::PointCloud<PointType>::Ptr cloud) {
+  pcl::PointCloud<pcl::Normal>::Ptr cloud_normals;
+  pcl::NormalEstimationOMP<PointType, NormalType> norm_est;
+  norm_est.setKSearch(10);
+  norm_est.setInputCloud(cloud);
+  norm_est.compute(*cloud_normals);
   return cloud_normals;
 }
 
